@@ -1,12 +1,12 @@
 # Usage Data
 
-This application is a tool designed to make it simple to provide SMA with daily task counts that a customer runs in their OpCon environments. It runs as an OpCon job (daily, by default) that can be configured like any other job.
+This application is a tool designed to make it simple to provide SMA Technologies with daily task counts that a customer runs in their OpCon environments. It runs as an OpCon job (daily, by default) that can be configured like any other job.
 
-By default, it uses both, an Azure cloud database (for SMA) and a local JSON file (for customer) to publish the task counts. However, it is configurable to turn off publishing at either of those locations.
+By default, it publishes the data to an Azure service and a local JSON file. It is configurable to turn off either publish location.
 
 ## Installation
 
-To use the OWI tool, simply browse to the [latest release](https://github.com/smatechnologies/usage-data/releases/latest) of this repository and look for the assets. If OpCon is installed on Windows, please download winbase.zip. If OpCon runs in a Docker container, download dockerbase.zip. That's is all you need.
+To use the Usage Data tool, simply browse to the [latest release](https://github.com/smatechnologies/usage-data/releases/latest) of this repository and look for the assets. If OpCon is installed on Windows, please download winbase.zip. If OpCon runs in a Docker container, download dockerbase.zip. That is all you need.
 
 **If you are on Windows:**
 - Create a folder named **"TaskCollection"** at the same level as **"SAM"** folder within OpCon installation. Unzip the winbase.zip archive to that folder.
@@ -48,7 +48,7 @@ If configured, it also publishes these counts to the cloud database. **Please no
 
 Please provide feedback through standard channels.
 
-Enhancement ideas should be submitted via the [SMArt ideas portal](https://smartideas.ideas.aha.io/portal_session/new).
+Enhancement ideas should be submitted via the [SMArt ideas portal](https://smartideas.featureupvote.com/suggestions/add).
 
 To report an issue, please use the [Customer Community](https://smatechnologies.force.com/smartusers/login]) and open a Support case.  We will ask you to be on the latest version.  If you are encountering issues please check here to verify you have the latest!
 
