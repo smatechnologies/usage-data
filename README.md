@@ -1,33 +1,62 @@
-# Project Name
-Project description
+# Usage Data
 
-# Disclaimer
-No Support and No Warranty are provided by SMA Technologies for this project and related material. The use of this project's files is on your own risk.
+This application is a tool designed to make it simple to provide SMA with daily task counts that a customer runs in their OpCon environments. It runs as an OpCon job (daily, by default) that can be configured like any other job.
 
-SMA Technologies assumes no liability for damage caused by the usage of any of the files offered here via this Github repository.
+By default, it uses both, an Azure cloud database (for SMA) and a local JSON file (for customer) to publish the task counts. However, it is configurable to turn off publishing at either of those locations.
 
-# Prerequisites
+## Installation
 
+To use the OWI tool, simply browse to the [latest release](https://github.com/smatechnologies/usage-data/releases/latest) of this repository and look for the assets. If OpCon is installed on Windows, please download winbase.zip. If OpCon runs in a Docker container, download dockerbase.zip. That's is all you need.
 
-# Instructions
+**If you are on Windows:**
+- Create a folder named **"TaskCollection"** at the same level as **"SAM"** folder within OpCon installation. Unzip the winbase.zip archive to that folder.
 
+**If you are on Docker:**
+- Unzip the dockerbase.zip archive to a folder named "TaskCollection" on the host machine.
+- From one level above this folder, use **"docker cp TaskCollection <container_name>:/app** to copy the application to the container.
+- Alternatively, you may map the above folder to the container when starting your container (if OpCon is not yet running). **E.g.: "docker run ... -v C:\OpCon\TaskCollection:/app/TaskCollection ..."**
 
-# License
-Copyright 2019 SMA Technologies
+## Instructions
+- Once downloaded and extracted, open a command prompt to the "TaskCollection" folder on Windows and run "TaskCount.exe", which runs and creates a schedule "SMATaskCollection" and a single job in it "SMATaskCount".
+- Alternatively, you may double-click the application, which does the same. However, please note that if there are any errors, they are output to the console, and may not be visible, if you double-click.
+- When run without any arguments, the application creates the auto-built schedule and job with all default settings. You may choose to have different settings given below.
+- When running on Docker, enter the container and go to **/app/TaskCollection** and then run **"TaskCount"** from the prompt to use defaults to set up the schedule and job.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at [apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+## Settings
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+You may provide arguments to the application when running it for the first time from the command prompt. These settings will be applied to the job created.
 
-# Contributing
-We love contributions, please read our [Contribution Guide](CONTRIBUTING.md) to get started!
+- **SELF_UPDATE:** This argument specifies if the application should update itself if a new version is available on GitHub, before running **(Default "True")**. E.g.: TaskCount.exe SELF_UPDATE=True
+- **PUBLISH_TO_CLOUD:** This argument specifies if the task counts should be published to the Azure SQL Database **(Default "True")**. E.g.: TaskCount.exe PUBLISH_TO_CLOUD=False
+- **PUBLISH_LOCAL:** This argument specifies if the task counts should be published to a local JSON file **(Default "True")**. E.g.: TaskCount.exe PUBLISH_LOCAL=True
+- **PUBLISH_FREQUENCY:** This argument specifies the frequency of the job **(Default "Daily")**. E.g.: TaskCount.exe PUBLISH_FREQUENCY=Weekly
+- **MACHINE_NAME:** This argument applies when creating the job. This is the OpCon machine name that will be used to run the job (it must be an agent for the local machine where SAM is running). By default the application searches the database for a machine with IP=127.0.01, or the local machine's IP of the local machine's FQDN.
 
-# Code of Conduct
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code-of-conduct.md)
-SMA Technologies has adopted the [Contributor Covenant](CODE_OF_CONDUCT.md) as its Code of Conduct, and we expect project participants to adhere to it. Please read the [full text](CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
+## How it Works
+
+When the job runs, it first attemps to update itself from the latest version on GitHub, if configured to do so. **Please note that port 443 must be open to talk to https://github.com/smatechnologies/usage-data/releases/latest**.
+
+Then it reads history from the database that SAM is configured to connect to and only fetches all the daily task counts. It does not count null jobs, or job reruns with the same arguments as additional tasks. It also does this without locking tables, so it should not affect SAM's processing.
+
+The application also has the ability to count certain processes (executables) separately, so they can be subtracted from the daily counts, if needed. This list is automatically maintained in the cloud.
+
+After that, it creates a local JSON file with all the daily counts it has along with a breakdown by platform and department. The first time the job runs, it collects all daily counts for the last 1 year. After then, it only collects counts from the last point it left off.
+
+If configured, it also publishes these counts to the cloud database. **Please note that port 443 must be open to talk to https://usagedata.azurewebsites.net**.
+
+## Feedback
+
+Please provide feedback through standard channels.
+
+Enhancement ideas should be submitted via the [SMArt ideas portal](https://smartideas.ideas.aha.io/portal_session/new).
+
+To report an issue, please use the [Customer Community](https://smatechnologies.force.com/smartusers/login]) and open a Support case.  We will ask you to be on the latest version.  If you are encountering issues please check here to verify you have the latest!
+
+## Release Notes
+
+### New Features
+- Create a task collection application that when run from the command line without parameters, configures itself by creating an OpCon schedule/job that runs each day and produces a simple job output with the total count of tasks run each day.
+- Allows the task count job to publish tasks data to a local JSON file in the application's "ProgramData" directory, which includes counts by day and by department and platform per day.
+- The task count application is able to collect data only from the time since the job was last run, so it fetches less data and is hence better performing.
+- Allow posting the task counts to the Azure cloud, so it can provide a better view of the tasks run each day/month at customer OpCon environments.
+- The task count application is now able to self-update to the latest version from the hosting location.
