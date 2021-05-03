@@ -30,7 +30,7 @@ You may provide arguments to the application when running it for the first time 
 - **PUBLISH_TO_CLOUD:** This argument specifies if the task counts should be published to the Azure SQL Database **(Default "True")**. E.g.: TaskCount.exe PUBLISH_TO_CLOUD=False
 - **PUBLISH_LOCAL:** This argument specifies if the task counts should be published to a local JSON file **(Default "True")**. E.g.: TaskCount.exe PUBLISH_LOCAL=True
 - **PUBLISH_FREQUENCY:** This argument specifies the frequency of the job **(Default "Daily")**. E.g.: TaskCount.exe PUBLISH_FREQUENCY=Weekly
-- **MACHINE_NAME:** This argument applies when creating the job. This is the OpCon machine name that will be used to run the job (it must be an agent for the local machine where SAM is running). By default the application searches the database for a machine with IP=127.0.01, or the local machine's IP of the local machine's FQDN.
+- **MACHINE_NAME:** This argument applies only when setting up the job. This is the OpCon machine name that will be used to run the job (it must be an agent for the local machine where SAM is running). By default the application searches the database for a machine with IP=127.0.0.1, or the local machine's IP or the local machine's fully qualifixed domain name (FQDN).
 
 ## How it Works
 
