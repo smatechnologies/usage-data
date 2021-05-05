@@ -42,7 +42,7 @@ The application also has the ability to count certain processes (executables) se
 
 After that, it creates a local JSON file with all the daily counts it has along with a breakdown by platform and department. The first time the job runs, it collects all daily counts for the last 1 year. After then, it only collects counts from the last point it left off.
 
-If configured, it also publishes these counts to the cloud database. **Please note that port 443 must be open to talk to https://usagedata.azurewebsites.net**.
+If configured, it also publishes these counts to the cloud database. **Please note that port 443 must be open to talk to https://usagedata.smatechnologies.com**.
 
 ## Feedback
 
