@@ -9,17 +9,20 @@ By default, it publishes the data to an Azure service and a local JSON file. It 
 To use the Usage Data tool, simply browse to the [latest release](https://github.com/smatechnologies/usage-data/releases/latest) of this repository and look for the assets. If OpCon is installed on Windows, please download winbase.zip. If OpCon runs in a Docker container, download dockerbase.zip. That is all you need.
 
 **If you are on Windows:**
-- Create a folder named **"TaskCollection"** at the same level as **"SAM"** folder within OpCon installation. Unzip the winbase.zip archive to that folder.
+- Create a folder named **"TaskCollection"** at the same level as **"SAM"** installation folder within OpCon installation. Unzip the winbase.zip archive to that folder.
+- E.g. locations - C:\Program Files\OpConxps\TaskCollection, or D:\MyAPplications\OpConxps\TaskCollection
 
 **If you are on Docker:**
 - Unzip the dockerbase.zip archive to a folder named "TaskCollection" on the host machine.
 - From one level above this folder, use **"docker cp TaskCollection <container_name>:/app** to copy the application to the container.
 - Alternatively, you may map the above folder to the container when starting your container (if OpCon is not yet running). **E.g.: "docker run ... -v C:\OpCon\TaskCollection:/app/TaskCollection ..."**
+- E.g. location - /app/TaskCollection
 
 ## Instructions
 - Once downloaded and extracted, open a command prompt to the "TaskCollection" folder on Windows and run "TaskCount.exe", which runs and creates a schedule "SMATaskCollection" and a single job in it "SMATaskCount".
 - Alternatively, you may double-click the application, which does the same. However, please note that if there are any errors, they are output to the console, and may not be visible, if you double-click.
 - When run without any arguments, the application creates the auto-built schedule and job with all default settings. You may choose to have different settings given below.
+- Please note that the job's command line uses a global property called "[[SMAOpConPath]]", which must exist and should have the path to the root OpCon folder, like C:\Program Files\OpConxps.
 - When running on Docker, enter the container and go to **/app/TaskCollection** and then run **"TaskCount"** from the prompt to use defaults to set up the schedule and job.
 
 ## Settings
@@ -54,7 +57,12 @@ To report an issue, please use the [Customer Community](https://smatechnologies.
 
 ## Release Notes
 
-### New Features
+### Version 1.1.0
+#### Fixes
+- Fixed an issue where an OpCon user assigned to a role with "inherit all schedules" privilege was unable to see the new task collection schedule.
+
+### Version 1.0.0
+#### New Features
 - Create a task collection application that when run from the command line without parameters, configures itself by creating an OpCon schedule/job that runs each day and produces a simple job output with the total count of tasks run each day.
 - Allows the task count job to publish tasks data to a local JSON file in the application's "ProgramData" directory, which includes counts by day and by department and platform per day.
 - The task count application is able to collect data only from the time since the job was last run, so it fetches less data and is hence better performing.
