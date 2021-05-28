@@ -57,6 +57,10 @@ To report an issue, please use the [Customer Community](https://smatechnologies.
 
 ## Release Notes
 
+### Version 1.2.0
+#### Fixes
+- Fixed an issue where task collection would skip a day every alternate day of collection.
+
 ### Version 1.1.0
 #### Fixes
 - Fixed an issue where an OpCon user assigned to a role with "inherit all schedules" privilege was unable to see the new task collection schedule.
