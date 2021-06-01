@@ -6,17 +6,19 @@ By default, it publishes the data to an Azure service and a local JSON file. It 
 
 ## Installation
 
-To use the Usage Data tool, simply browse to the [latest release](https://github.com/smatechnologies/usage-data/releases/latest) of this repository and look for the assets. If OpCon is installed on Windows, please download winbase.zip. If OpCon runs in a Docker container, download dockerbase.zip. That is all you need.
+To use the Usage Data tool, simply browse to the [latest release](https://github.com/smatechnologies/usage-data/releases/latest) of this repository and look for the assets. If OpCon is installed on Windows, please download winbase.zip. If OpCon runs in a Docker container, download dockerbase.zip. Also, download the [excludes file](https://github.com/smatechnologies/usage-data/blob/master/config/Executables.json). That is all you need.
 
 **If you are on Windows:**
 - Create a folder named **"TaskCollection"** at the same level as **"SAM"** installation folder within OpCon installation. Unzip the winbase.zip archive to that folder.
 - E.g. locations - C:\Program Files\OpConxps\TaskCollection, or D:\MyAPplications\OpConxps\TaskCollection
-
+- Create a folder named **"TaskCollection"** in the **"ProgramData"** folder for OpCon at the same level as **"SAM"**. Copy the downloaded **"Executables.json"** file into that folder.
+- E.g. location - C:\ProgramData\OpConxps\TaskCollection
 **If you are on Docker:**
 - Unzip the dockerbase.zip archive to a folder named "TaskCollection" on the host machine.
 - From one level above this folder, use **"docker cp TaskCollection <container_name>:/app** to copy the application to the container.
 - Alternatively, you may map the above folder to the container when starting your container (if OpCon is not yet running). **E.g.: "docker run ... -v C:\OpCon\TaskCollection:/app/TaskCollection ..."**
 - E.g. location - /app/TaskCollection
+- Copy the downloaded **"Executables.json"** file into /app/TaskCollection.
 
 ## Instructions
 - Once downloaded and extracted, open a command prompt to the "TaskCollection" folder on Windows and run "TaskCount.exe", which runs and creates a schedule "SMATaskCollection" and a single job in it "SMATaskCount".
