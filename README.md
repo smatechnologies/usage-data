@@ -59,6 +59,19 @@ To report an issue, please use the [Customer Community](https://smatechnologies.
 
 ## Release Notes
 
+### Version 1.3.0
+#### New Features
+- The task collection job is set to 'Do Not Schedule' when setup is complete. This allows users to configure it as needed before setting it to build in a released status.
+
+#### Fixes
+- Fixed an issue in the cloud application where customers that are east of UTC sometimes saw their task counts counted
+twice for a given day making the reporting on their daily tasks incorrect. NOTE: This fix was published as part of
+this release 1.3.0, but it will work even for previous versions of the application as the actual fix is in the cloud
+function.
+
+- Fixed an issue where task collection application would fail for some European and other customers due to the date format
+used when collecting tasks.
+
 ### Version 1.2.0
 #### Fixes
 - Fixed an issue where task collection would skip a day every alternate day of collection.
