@@ -59,6 +59,10 @@ To report an issue, please use the [Customer Community](https://smatechnologies.
 
 ## Release Notes
 
+### Version 1.4.0
+#### Fixes
+- Fixed an issue where after an upgrade of OpCon, if running usage data locally (not connecting to the cloud for information), then 'core tasks' were not identified and showed a count of zero because the JSON file that lists the default core tasks got deleted during the upgrade. Now, we maintain a default list in the utility, so if the file is missing, we still can publish core task counts from the default list.
+
 ### Version 1.3.0
 #### New Features
 - The task collection job is set to 'Do Not Schedule' when setup is complete. This allows users to configure it as needed before setting it to build in a released status.
