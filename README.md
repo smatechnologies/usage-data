@@ -59,6 +59,17 @@ To report an issue, please use the [Customer Community](https://smatechnologies.
 
 ## Release Notes
 
+### Version 1.6.0
+### **NOTE:** Version 1.6.0 is only compatible with OpCon version 25.3.0 and above (26.0.0 for on-prem customers). Please do not upgrade to this version if you are on an OpCon version lower than the above ones.
+
+### New Features
+- Updated the utility to use .Net 9.
+- Updated the utility to use the new database connection string with more security features corresponding to OpCon's 25.3.0 release.
+
+### Version 1.5.0
+#### New Features
+- Added a new option to usage data for "QUERY_TIMEOUT_IN_SECONDS", which provides a user defined timeout to the task collection query, in case the default of 3600 is not good.
+
 ### Version 1.4.0
 #### Fixes
 - Fixed an issue where after an upgrade of OpCon, if running usage data locally (not connecting to the cloud for information), then 'core tasks' were not identified and showed a count of zero because the JSON file that lists the default core tasks got deleted during the upgrade. Now, we maintain a default list in the utility, so if the file is missing, we still can publish core task counts from the default list.
